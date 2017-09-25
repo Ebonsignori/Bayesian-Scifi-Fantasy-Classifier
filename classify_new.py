@@ -45,4 +45,5 @@ def book_features(book):
 classifier = load_classifier()
 
 # Print accuracy of classifier with respect to the test set
-print(classifier.classify(book_features(book)))
+print("The classifier claims that your book genre is: " +
+      str(classifier.classify(book_features(book))))

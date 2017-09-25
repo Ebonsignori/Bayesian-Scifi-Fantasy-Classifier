@@ -87,7 +87,8 @@ classifier = nltk.NaiveBayesClassifier.train(train_set)
 save_classifier(classifier)
 
 # Print accuracy of classifier with respect to the test set
-print(nltk.classify.accuracy(classifier, test_set))
+print("Classifier accuracy = " +
+      str(nltk.classify.accuracy(classifier, test_set)*100) + "%")
 
 # Print time taken for program execution
 print("Time taken for " + str(books_loaded) + " books from each genre to train \

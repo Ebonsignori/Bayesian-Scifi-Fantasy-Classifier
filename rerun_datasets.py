@@ -26,4 +26,5 @@ test_set = featuresets[:int(len(featuresets)*.2)]
 classifier = load_classifier()
 
 # Print accuracy of classifier with respect to the test set
-print(nltk.classify.accuracy(classifier, test_set))
+print("Classifier accuracy = " +
+      str(nltk.classify.accuracy(classifier, test_set)*100) + "%")

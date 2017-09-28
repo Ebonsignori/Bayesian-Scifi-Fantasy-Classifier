@@ -1,12 +1,17 @@
 # Sci-Fi/Fantasy Genre Classifier using Naive Bayes
-These programs allow to do the following:
-1. Train a Bayesian classifier with fantasy and sci-fi books in .txt format
+Programs require: 
+* Python 3 or higher (Source written and tested in 3.6)
+* [pickle - Python Object Serialization](https://docs.python.org/3/library/pickle.html)
+* [nltk - Natural Language Toolkit](http://www.nltk.org/install.html)
+
+Programs allow to do the following:
+1. Train a Bayesian classifier with fantasy and sci-fi books in .txt (utf-8) format
 2. Calculate the accuracy (%) of said classifier using ROC methods
-3. Attempt to classify a new book in .txt format as either sci-fi or fantasy
+3. Attempt to classify a new book in .txt (utf-8) format as either sci-fi or fantasy
 
 All three can be done in any order since the classifier has already been 
-trained and stored in a binary file found in the *./saved/classifiers* 
-directory. 
+trained and stored in a binary file using pickle. The file can be found 
+in *./saved/classifiers*. 
 
 
 ### (1) Training
@@ -25,7 +30,7 @@ Include the *saved* folder in the same directory as *performance_test.py*.
 
 ### (3) New Book Classification
 To classify a new book you can pass a book already in the repository or your
-own if you first convert it to a .txt format.
+own if you first convert it to a .txt format with utf-8 encoding.
 
 ```
 python classify_new.py ./Books/scifi/txt/scifi_book_101.txt

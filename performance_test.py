@@ -25,16 +25,17 @@ custom_stopwords = set(('sci-fi', 'fantasy', 'page', 'chapter', 'said'))
 all_stopwords = default_stopwords | custom_stopwords
 
 # Populate category list with the genres
-for contents in os.listdir("./Books/"):
-    if str(contents) != "rename.py":
-        genre = str(contents)
-        categories.append(genre)
+for contents in os.listdir("./books/"):
+    if str(contents) != "rename_and_shuffle_books.py":
+        if str(contents) != "snippets":
+            genre = str(contents)
+            categories.append(genre)
 
 # Create list of tuples of each book's tokenized words in a list and their
 # corresponding genre. In the form [ ([book_words], genre) ] where [] = list 
 # and () = tuple
 for genre in categories:
-    directory = "./Books/" + genre + "/txt/"
+    directory = "./books/" + genre + "/txt/"
     books.extend(
                 # Start at book #99 as previous 99 were used to train
                 (list(nltk.word_tokenize(
@@ -74,6 +75,37 @@ test_set = [(book_features(book), genre) for (book, genre) in books]
 # Load NaiveBayes Classifier
 classifier = load_classifier()
 
-# Print accuracy of classifier with respect to the test set
-print("Classifier accuracy = " +
-      str(nltk.classify.accuracy(classifier, test_set)*100) + "%")
+
+# Performance Measurments
+positive = "fantasy"  # Assume fantasy to be positive
+negative = "scifi"  # Assume Sci-fi to be negative
+
+TP = 0  # True Positive
+FP = 0  # False Positive
+FN = 0  # False Negative
+TN = 0  # True Negative
+# Classif testset and count the resulting true/false positives/negatives
+for test_book in test_set:
+    classified_genre = classifier.classify(test_book[0])
+    correct_genre = test_book[1]
+    # if true and a positive example increment true positive count
+    if classified_genre == correct_genre and classified_genre == positive:
+        TP += 1
+    # if false and a positive example increment false positive count
+    elif classified_genre != correct_genre and classified_genre == positive:
+        FP += 1
+    # if true and a negative example increment true negative count
+    elif classified_genre == correct_genre and classified_genre == negative:
+        TN += 1
+    # if false and a negative example increment false negative count
+    elif classified_genre != correct_genre and classified_genre == negative:
+        FN += 1
+
+sensitivity = TP/(TP + FN)
+specificity = TN/(TN + FP)
+accuracy = (TN + TP) / (TN + TP + FN + FP)
+
+print("Classifier's performance metrics using testset: \n" +
+      "Sensitivity: " + str(round(sensitivity, 2)) + "\n"
+      "specificity: " + str(round(specificity, 2)) + "\n"
+      "accuracy: " + str(round(accuracy, 2)) + "\n")

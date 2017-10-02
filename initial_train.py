@@ -35,14 +35,15 @@ custom_stopwords = set(('sci-fi', 'fantasy', 'page', 'chapter', 'said'))
 all_stopwords = default_stopwords | custom_stopwords
 
 # Populate cat list with categories and cat dict with their respective lengths
-for contents in os.listdir("./Books/"):
-    if str(contents) != "rename.py":
-        genre = str(contents)
-        categories.append(genre)
+for contents in os.listdir("./books/"):
+    if str(contents) != "rename_and_shuffle_books.py":
+        if str(contents) != "snippets":
+            genre = str(contents)
+            categories.append(genre)
 
 # Create list of all lists containing a book's words and corresponding label
 for genre in categories:
-    directory = "./Books/" + genre + "/txt/"
+    directory = "./books/" + genre + "/txt/"
     books.extend(
                 (list(nltk.word_tokenize(
                                         open(directory + genre +

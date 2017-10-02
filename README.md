@@ -4,7 +4,7 @@ Programs require:
 * [pickle - Python Object Serialization](https://docs.python.org/3/library/pickle.html)
 * [nltk - Natural Language Toolkit](http://www.nltk.org/install.html)
 
-Programs allow to do the following:
+Included programs can do the following:
 1. Train a Bayesian classifier with fantasy and sci-fi books in .txt (utf-8) format
 2. Calculate the accuracy (%) of said classifier using ROC methods
 3. Attempt to classify a new book in .txt (utf-8) format as either sci-fi or fantasy

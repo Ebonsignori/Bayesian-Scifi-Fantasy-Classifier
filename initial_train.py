@@ -1,16 +1,15 @@
 import pickle  # For saving a trained classifier and datasets
-import nltk
-import os
 import random  # To randomize order of training examples
 import time  # For timing execution of program
-
+import nltk
+import os
 
 # Time program execution
 time_taken = time.time()
 
 # Declare variables
 categories = list()  # Categories (genres) to be classified
-books_loaded = 100  # Number of taining examples in each category
+books_loaded = 100  # Number of training examples in each category
 books = list()  # Tuples of book word lists and genre (book_words, genre)
 all_word_freqs = list()  # Combined genre words and their frequencies
 
@@ -28,7 +27,7 @@ def save_data(dataset):
         pickle.dump(dataset, f)
     f.close()
 
-# Define extrenuous words with nltk's default and custom book stopwords
+# Define extraneous words with NLTK's default and custom book stop words
 default_stopwords = set(nltk.corpus.stopwords.words('english'))
 custom_stopwords = set(('sci-fi', 'fantasy', 'page', 'chapter', 'said'))
 
@@ -57,7 +56,7 @@ for genre in categories:
 random.shuffle(books)
 
 
-# Extract features as top 2000 most occuring words in books
+# Extract features as top 2000 most frequently occurring words in books
 def book_features(book):
     # Find 2000 most frequent words in book
     most_frequent = nltk.FreqDist(word.lower() for word in book
@@ -68,7 +67,7 @@ def book_features(book):
                                   )
     most_frequent = list(most_frequent)[:2000]  # Only top 2000
 
-    # Define unique word occurances in book
+    # Define unique word occurrences in book
     book_words = set(book)
     features = {}
 
@@ -78,11 +77,11 @@ def book_features(book):
         features['contains({})'.format(word)] = (word in book_words)
     return features
 
-# Seperate data into training and test sets and save data for later
+# Separate data into training and test sets and save data for later
 train_set = [(book_features(book), genre) for (book, genre) in books]
 save_data(train_set)
 
-# Classify data using a NaiveBayes Classifier and save classifier for later
+# Classify data using a Naive Bayes Classifier and save classifier for later
 classifier = nltk.NaiveBayesClassifier.train(train_set)
 save_classifier(classifier)
 
